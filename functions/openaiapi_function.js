@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import axios from "axios";
 
 exports.handler = async function(event, context) {
   const { prompt } = JSON.parse(event.body);
@@ -23,24 +23,38 @@ exports.handler = async function(event, context) {
     frequency_penalty: 0.2,
   };
 
-  const response = await fetch(chatGptAPI, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${openAIapiKey}`,
-    },
-    body: JSON.stringify(requestBody),
-  });
+  try {
+    const response = await axios.post(chatGptAPI, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${openAIapiKey}`,
+      },
+    });
 
-  const data = await response.json();
+    const data = response.data;
 
-  return {
-    statusCode: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "Content-Type",
-      "Access-Control-Allow-Methods": "POST, OPTION",
-    },
-    body: JSON.stringify(data),
-  };
-};
+    return {
+      statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "POST, OPTION",
+      },
+      body: JSON.stringify(data),
+    };
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+
+    return {
+      statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "POST, OPTION",
+      },
+      body: JSON.stringify({
+        error: "Internal Server Error",
+      }),
+    };
+  }
+}
