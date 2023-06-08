@@ -1,6 +1,8 @@
 import axios from "axios";
 
 exports.handler = async function(event, context) {
+  console.log("Event body:", event.body);  // Log the event body
+
   const { prompt } = JSON.parse(event.body);
   const chatGptAPI = "https://api.openai.com/v1/chat/completions";
   const openAIapiKey = process.env.OPENAI_API_KEY;
@@ -22,6 +24,9 @@ exports.handler = async function(event, context) {
     n: 1,
     frequency_penalty: 0.2,
   };
+
+  console.log("Prompt:", prompt);  // Log the prompt
+  console.log("Request body:", JSON.stringify(requestBody));  // Log the request body
 
   try {
     const response = await axios.post(chatGptAPI, requestBody, {
