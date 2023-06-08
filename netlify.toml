@@ -1,17 +1,13 @@
 [build]
   functions = "functions"
 
+[functions]
+  directory = "functions"
+  node_bundler = "esbuild"
+  external_node_modules = ["axios"]
+
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"
 
 [[plugins]]
   package = "netlify-plugin-inline-functions-env"
-
-[[functions]]
-  directory = "functions"
-  node_bundler = "esbuild"
-  external_node_modules = []
-
-[[functions.openaiapi]]
-  path = "openaiapi_function"
-  node_bundler = "webpack"
