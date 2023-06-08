@@ -1,12 +1,17 @@
 [build]
   functions = "functions"
 
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Access-Control-Allow-Origin = "*"
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
 
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
+[[plugins]]
+  package = "netlify-plugin-inline-functions-env"
+
+[[functions]]
+  directory = "functions"
+  node_bundler = "esbuild"
+  external_node_modules = []
+
+[[functions.openaiapi]]
+  path = "openaiapi_function"
+  node_bundler = "webpack"
