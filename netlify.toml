@@ -1,5 +1,7 @@
 [build]
   functions = "functions"
+  timeoutSeconds = 60
+
 
 [functions]
   directory = "functions"
