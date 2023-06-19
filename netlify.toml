@@ -2,14 +2,13 @@
   functions = "functions"
   timeoutSeconds = 60
 
-
 [functions]
   directory = "functions"
   node_bundler = "esbuild"
-  external_node_modules = ["axios"]
+  external_node_modules = ["axios", "@supabase/supabase-js"]
 
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"
 
 [[plugins]]
-  package = "netlify-plugin-inline-functions-env" 
+  package = "netlify-plugin-inline-functions-env"
